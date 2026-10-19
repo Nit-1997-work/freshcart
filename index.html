@@ -27,6 +27,14 @@
     </header>
 
     <main>
+      <aside class="promo-banner" aria-label="First-order promotion">
+        <div class="container promo-inner">
+          <p class="promo-text">New here? Get $20 off your first order with code <strong class="promo-code">FRESH20</strong>.</p>
+          <button class="btn promo-copy" type="button" data-code="FRESH20" aria-live="polite">Copy code</button>
+          <span class="promo-tag">Ends Sunday</span>
+        </div>
+      </aside>
+
       <section class="hero">
         <div class="container hero-inner">
           <div class="hero-copy">
@@ -105,5 +113,15 @@
         </nav>
       </div>
     </footer>
+    <script>
+      const copyBtn = document.querySelector('.promo-copy');
+      let resetTimer;
+      copyBtn.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(copyBtn.dataset.code);
+        copyBtn.textContent = 'Copied!';
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => (copyBtn.textContent = 'Copy code'), 2000);
+      });
+    </script>
   </body>
 </html>

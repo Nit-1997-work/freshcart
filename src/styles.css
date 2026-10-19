@@ -129,6 +129,68 @@ h3 {
   font-weight: 600;
 }
 
+.promo-banner {
+  background: var(--green-900);
+  color: #fff;
+}
+
+.promo-inner {
+  display: grid;
+  grid-template-columns: 1fr auto auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.promo-tag {
+  justify-self: end;
+  padding: 3px 10px;
+  border: 1px solid var(--orange-500);
+  border-radius: 999px;
+  color: var(--orange-500);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.promo-text {
+  grid-column: 2;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.promo-code {
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--orange-500);
+  color: var(--green-900);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.promo-copy {
+  flex-shrink: 0;
+  min-width: 104px;
+  padding: 6px 14px;
+  font-size: 14px;
+  background: var(--green-100);
+  color: var(--green-900);
+}
+
+.promo-copy:hover {
+  background: #fff;
+}
+
+.promo-copy:focus-visible {
+  outline: 2px solid var(--orange-500);
+  outline-offset: 2px;
+}
+
 .hero {
   background: linear-gradient(180deg, var(--green-100) 0%, var(--bg) 100%);
 }
@@ -322,4 +384,5 @@ h3 {
   .hero h1 { font-size: 38px; }
   .grid { grid-template-columns: repeat(2, 1fr); }
   .nav { display: none; }
+  .promo-inner { display: flex; flex-direction: column; gap: 8px; text-align: center; }
 }
