@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreshCart - Groceries delivered in an hour</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="#" class="logo"><span class="logo-mark">🥑</span> FreshCart</a>
+        <nav class="nav">
+          <a href="#">Stores</a>
+          <a href="#">Deals</a>
+          <a href="#">Membership</a>
+          <a href="#">Help</a>
+        </nav>
+        <div class="header-actions">
+          <a href="#" class="link">Sign in</a>
+          <a href="#" class="btn btn-primary">Get started</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">Same-day delivery</p>
+            <h1>Groceries at your door in as little as one hour.</h1>
+            <p class="lede">Shop your favorite local stores. A personal shopper picks the freshest items and brings them straight to you.</p>
+            <form class="zip-form" onsubmit="return false">
+              <input type="text" inputmode="numeric" placeholder="Enter your ZIP code" aria-label="ZIP code" />
+              <button class="btn btn-primary" type="submit">Find stores</button>
+            </form>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="basket">🧺</div>
+            <span class="float f1">🍓</span>
+            <span class="float f2">🥦</span>
+            <span class="float f3">🥖</span>
+            <span class="float f4">🍋</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="categories">
+        <div class="container">
+          <h2>Shop by category</h2>
+          <div class="chips">
+            <a href="#" class="chip">🍎 Produce</a>
+            <a href="#" class="chip">🥛 Dairy</a>
+            <a href="#" class="chip">🥩 Meat &amp; Seafood</a>
+            <a href="#" class="chip">🍞 Bakery</a>
+            <a href="#" class="chip">🧃 Beverages</a>
+            <a href="#" class="chip">🧼 Household</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="products">
+        <div class="container">
+          <h2>Popular this week</h2>
+          <div class="grid">
+            <article class="card">
+              <div class="card-art">🍓</div>
+              <h3>Organic Strawberries</h3>
+              <p class="meta">1 lb</p>
+              <div class="card-foot"><span class="price">$4.99</span><button class="btn btn-small">Add</button></div>
+            </article>
+            <article class="card">
+              <div class="card-art">🥑</div>
+              <h3>Hass Avocados</h3>
+              <p class="meta">Bag of 4</p>
+              <div class="card-foot"><span class="price">$5.49</span><button class="btn btn-small">Add</button></div>
+            </article>
+            <article class="card">
+              <div class="card-art">🥖</div>
+              <h3>Sourdough Loaf</h3>
+              <p class="meta">24 oz</p>
+              <div class="card-foot"><span class="price">$3.99</span><button class="btn btn-small">Add</button></div>
+            </article>
+            <article class="card">
+              <div class="card-art">🥛</div>
+              <h3>Whole Milk</h3>
+              <p class="meta">1 gallon</p>
+              <div class="card-foot"><span class="price">$3.79</span><button class="btn btn-small">Add</button></div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span>© 2025 FreshCart. A demo storefront.</span>
+        <nav class="nav">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Contact</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
