@@ -470,6 +470,193 @@ h3 {
   margin-top: 8px;
 }
 
+.nav a[aria-current="page"] {
+  color: var(--green-700);
+}
+
+.account-email {
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.stores-page {
+  padding: 48px 0;
+}
+
+.page-title {
+  font-size: 32px;
+  color: var(--green-900);
+}
+
+.stores-page .page-title {
+  margin-bottom: 8px;
+}
+
+.store-grid {
+  margin-top: 24px;
+}
+
+.store-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.store-card:focus-visible,
+.back-link:focus-visible,
+.table-wrap:focus-visible {
+  outline: 2px solid var(--green-500);
+  outline-offset: 2px;
+}
+
+.store-card .card-foot {
+  margin-top: auto;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.store-count {
+  flex-shrink: 0;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--green-100);
+  color: var(--green-700);
+  font-weight: 600;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: var(--green-700);
+}
+
+.back-link:hover {
+  color: var(--green-900);
+}
+
+.store-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.store-heading .meta {
+  margin: 0;
+}
+
+.store-emoji {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  font-size: 36px;
+  background: var(--bg-soft);
+  border-radius: var(--radius);
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.inventory {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.inventory caption {
+  padding: 16px 20px;
+  text-align: left;
+  font-weight: 700;
+  border-bottom: 1px solid var(--line);
+}
+
+.inventory th,
+.inventory td {
+  padding: 14px 20px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.inventory th {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--bg-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.inventory tbody tr + tr td {
+  border-top: 1px solid var(--line);
+}
+
+.inventory .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.inventory .product-name {
+  font-weight: 600;
+}
+
+.inventory .sku {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.stock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stock-count {
+  min-width: 2ch;
+  text-align: right;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.stock-badge {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.stock-in {
+  background: var(--green-100);
+  color: var(--green-700);
+}
+
+.stock-low {
+  background: var(--orange-500);
+  color: var(--green-900);
+}
+
+.stock-out {
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--muted);
+}
+
+.not-found .meta {
+  margin: 8px 0 24px;
+  font-size: 16px;
+}
+
 @media (max-width: 860px) {
   .hero-inner { grid-template-columns: 1fr; }
   .hero-art { display: none; }
@@ -479,4 +666,41 @@ h3 {
   .promo-inner { display: flex; flex-direction: column; gap: 8px; text-align: center; }
   .auth { padding: 40px 0; }
   .auth-card { padding: 28px 20px; }
+  .stores-page { padding: 32px 0; }
+  .page-title { font-size: 26px; }
+}
+
+@media (max-width: 560px) {
+  .header-inner { gap: 16px; }
+  .header-actions { gap: 12px; min-width: 0; }
+  .account-email { max-width: 110px; font-size: 14px; }
+  .header-actions .btn { white-space: nowrap; }
+  .store-grid { grid-template-columns: 1fr; }
+  .store-heading { align-items: flex-start; }
+  .inventory { min-width: 0; }
+  .inventory thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .inventory tr {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "name name price" "sku size stock";
+    align-items: center;
+    gap: 6px 12px;
+    padding: 14px 16px;
+  }
+  .inventory tbody tr + tr { border-top: 1px solid var(--line); }
+  .inventory tbody tr + tr td { border-top: 0; }
+  .inventory th,
+  .inventory td { padding: 0; white-space: normal; }
+  .inventory caption { padding: 14px 16px; }
+  .inventory .product-name { grid-area: name; }
+  .inventory .sku { grid-area: sku; font-size: 14px; }
+  .inventory .size { grid-area: size; font-size: 14px; color: var(--muted); }
+  .inventory .num { grid-area: price; font-weight: 600; }
+  .inventory .stock { grid-area: stock; justify-self: end; }
 }

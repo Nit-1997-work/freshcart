@@ -22,3 +22,15 @@ test('header Sign in link on index.html opens /login.html', () => {
   const html = readFileSync(join(dist, 'index.html'), 'utf8');
   assert.match(html, /<a href="\/login\.html"[^>]*>Sign in<\/a>/);
 });
+
+test('vite build emits stores.html and store.html', () => {
+  assert.ok(existsSync(join(dist, 'stores.html')), 'dist/stores.html is missing');
+  assert.ok(existsSync(join(dist, 'store.html')), 'dist/store.html is missing');
+});
+
+test('header Stores link opens /stores.html on every page', () => {
+  for (const page of ['index.html', 'login.html', 'stores.html', 'store.html']) {
+    const html = readFileSync(join(dist, page), 'utf8');
+    assert.match(html, /<a href="\/stores\.html"[^>]*>Stores<\/a>/, `${page} Stores link`);
+  }
+});

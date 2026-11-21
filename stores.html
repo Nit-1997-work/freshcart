@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your stores - FreshCart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="/" class="logo"><span class="logo-mark">🥑</span> FreshCart</a>
+        <nav class="nav">
+          <a href="/stores.html" aria-current="page">Stores</a>
+          <a href="#">Deals</a>
+          <a href="#">Membership</a>
+          <a href="#">Help</a>
+        </nav>
+        <div class="header-actions">
+          <span class="account-email" id="account-email"></span>
+          <button class="btn btn-small" type="button" id="sign-out">Sign out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="stores-page">
+      <div class="container">
+        <p class="eyebrow">Your stores</p>
+        <h1 class="page-title">Pick a store to see its inventory</h1>
+        <div class="grid store-grid" id="store-grid"></div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span>© 2025 FreshCart. A demo storefront.</span>
+        <nav class="nav">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Contact</a>
+        </nav>
+      </div>
+    </footer>
+    <script type="module">
+      import { requireSession } from '/src/auth.js';
+      import { mountAccountHeader } from '/src/account-header.js';
+      import { STORES } from '/src/data/stores.js';
+
+      const session = requireSession();
+      if (session) {
+        mountAccountHeader(session);
+        const grid = document.querySelector('#store-grid');
+        for (const store of STORES) {
+          const card = document.createElement('a');
+          card.className = 'card store-card';
+          card.href = `/store.html?id=${encodeURIComponent(store.id)}`;
+          const art = document.createElement('div');
+          art.className = 'card-art';
+          art.setAttribute('aria-hidden', 'true');
+          art.textContent = store.emoji;
+          const name = document.createElement('h3');
+          name.textContent = store.name;
+          const address = document.createElement('p');
+          address.className = 'meta';
+          address.textContent = store.address;
+          const foot = document.createElement('div');
+          foot.className = 'card-foot';
+          const hours = document.createElement('span');
+          hours.className = 'store-hours';
+          hours.textContent = store.hours;
+          const count = document.createElement('span');
+          count.className = 'store-count';
+          count.textContent = `${store.products.length} items`;
+          foot.append(hours, count);
+          card.append(art, name, address, foot);
+          grid.append(card);
+        }
+      }
+    </script>
+  </body>
+</html>
