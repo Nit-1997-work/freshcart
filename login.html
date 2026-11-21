@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign in - FreshCart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="/" class="logo"><span class="logo-mark">🥑</span> FreshCart</a>
+        <nav class="nav">
+          <a href="#">Stores</a>
+          <a href="#">Deals</a>
+          <a href="#">Membership</a>
+          <a href="#">Help</a>
+        </nav>
+        <div class="header-actions">
+          <a href="/login.html" class="link" aria-current="page">Sign in</a>
+          <a href="#" class="btn btn-primary">Get started</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="auth">
+      <div class="container">
+        <section class="auth-card" aria-labelledby="signin-title">
+          <h1 id="signin-title">Sign in</h1>
+          <p class="auth-lede">Welcome back. Sign in to see your stores.</p>
+          <form class="auth-form" id="signin-form" novalidate>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" aria-describedby="email-error" required />
+              <p class="field-error" id="email-error" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="password">Password</label>
+              <input id="password" name="password" type="password" autocomplete="current-password" aria-describedby="password-error" required />
+              <p class="field-error" id="password-error" aria-live="polite"></p>
+            </div>
+            <button class="btn btn-primary auth-submit" type="submit">Sign in</button>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span>© 2025 FreshCart. A demo storefront.</span>
+        <nav class="nav">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Contact</a>
+        </nav>
+      </div>
+    </footer>
+    <script type="module">
+      import { getSession, signIn } from '/src/auth.js';
+
+      const STORES_URL = '/stores.html';
+      if (getSession()) location.replace(STORES_URL);
+
+      const form = document.querySelector('#signin-form');
+      const email = form.elements.email;
+      const password = form.elements.password;
+      const looksLikeEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+      function setError(input, message) {
+        document.getElementById(`${input.id}-error`).textContent = message;
+        if (message) input.setAttribute('aria-invalid', 'true');
+        else input.removeAttribute('aria-invalid');
+      }
+
+      function emailError() {
+        const value = email.value.trim();
+        if (!value) return 'Enter your email address.';
+        if (email.validity.typeMismatch || !looksLikeEmail(value)) return 'Enter a valid email, like you@example.com.';
+        return '';
+      }
+
+      function passwordError() {
+        return password.value ? '' : 'Enter your password.';
+      }
+
+      email.addEventListener('input', () => setError(email, ''));
+      password.addEventListener('input', () => setError(password, ''));
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const errors = [
+          [email, emailError()],
+          [password, passwordError()],
+        ];
+        errors.forEach(([input, message]) => setError(input, message));
+        const firstInvalid = errors.find(([, message]) => message);
+        if (firstInvalid) {
+          firstInvalid[0].focus();
+          return;
+        }
+        signIn(email.value.trim());
+        location.assign(STORES_URL);
+      });
+    </script>
+  </body>
+</html>
