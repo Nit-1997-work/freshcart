@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store inventory - FreshCart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="/" class="logo"><span class="logo-mark">🥑</span> FreshCart</a>
+        <nav class="nav">
+          <a href="/stores.html">Stores</a>
+          <a href="#">Deals</a>
+          <a href="#">Membership</a>
+          <a href="#">Help</a>
+        </nav>
+        <div class="header-actions">
+          <span class="account-email" id="account-email"></span>
+          <button class="btn btn-small" type="button" id="sign-out">Sign out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="stores-page">
+      <div class="container">
+        <a href="/stores.html" class="back-link">← All stores</a>
+
+        <section id="store-found" hidden>
+          <div class="store-heading">
+            <span class="store-emoji" id="store-emoji" aria-hidden="true"></span>
+            <div>
+              <h1 class="page-title" id="store-name"></h1>
+              <p class="meta" id="store-details"></p>
+            </div>
+          </div>
+          <div class="table-wrap" role="region" aria-labelledby="inventory-title" tabindex="0">
+            <table class="inventory" role="table">
+              <caption id="inventory-title">Inventory</caption>
+              <thead role="rowgroup">
+                <tr role="row">
+                  <th role="columnheader" scope="col">Product</th>
+                  <th role="columnheader" scope="col">SKU</th>
+                  <th role="columnheader" scope="col">Size</th>
+                  <th role="columnheader" scope="col" class="num">Price</th>
+                  <th role="columnheader" scope="col">Stock</th>
+                </tr>
+              </thead>
+              <tbody role="rowgroup" id="inventory-rows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="not-found" id="store-not-found" hidden>
+          <h1 class="page-title">Store not found</h1>
+          <p class="meta">We could not find that store. It may have moved or the link is wrong.</p>
+          <a href="/stores.html" class="btn btn-primary">Back to all stores</a>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span>© 2025 FreshCart. A demo storefront.</span>
+        <nav class="nav">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Contact</a>
+        </nav>
+      </div>
+    </footer>
+    <script type="module">
+      import { requireSession } from '/src/auth.js';
+      import { mountAccountHeader } from '/src/account-header.js';
+      import { findStore, stockStatus } from '/src/data/stores.js';
+
+      const STOCK_LABELS = { in: 'In stock', low: 'Low stock', out: 'Out of stock' };
+      const formatPrice = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format;
+
+      const session = requireSession();
+      if (session) {
+        mountAccountHeader(session);
+        const store = findStore(new URLSearchParams(location.search).get('id'));
+        if (!store) {
+          document.title = 'Store not found - FreshCart';
+          document.querySelector('#store-not-found').hidden = false;
+        } else {
+          document.title = `${store.name} - FreshCart`;
+          document.querySelector('#store-emoji').textContent = store.emoji;
+          document.querySelector('#store-name').textContent = store.name;
+          document.querySelector('#store-details').textContent = `${store.address} · ${store.hours}`;
+          document.querySelector('#inventory-title').textContent = `Inventory - ${store.products.length} items`;
+          const rows = document.querySelector('#inventory-rows');
+          for (const product of store.products) {
+            const row = document.createElement('tr');
+            row.setAttribute('role', 'row');
+            const cell = (text, className) => {
+              const td = document.createElement('td');
+              td.setAttribute('role', 'cell');
+              td.textContent = text;
+              if (className) td.className = className;
+              row.append(td);
+              return td;
+            };
+            cell(product.name, 'product-name');
+            cell(product.sku, 'sku');
+            cell(product.size, 'size');
+            cell(formatPrice(product.price), 'num');
+            const status = stockStatus(product.stock);
+            const stockCell = cell('', 'stock');
+            const count = document.createElement('span');
+            count.className = 'stock-count';
+            count.textContent = product.stock;
+            const badge = document.createElement('span');
+            badge.className = `stock-badge stock-${status}`;
+            badge.textContent = STOCK_LABELS[status];
+            stockCell.append(count, badge);
+            rows.append(row);
+          }
+          document.querySelector('#store-found').hidden = false;
+        }
+      }
+    </script>
+  </body>
+</html>
